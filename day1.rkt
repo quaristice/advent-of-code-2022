@@ -12,4 +12,7 @@
         '()
         (cons elfinv (parse-elves in)))))
 
-(foldl (lambda (l cur_max) (max cur_max (foldl + 0 l))) -1 (parse-elves in))
+(define calories (parse-elves in))
+
+(foldl (lambda (l cur_max) (max cur_max (foldl + 0 l))) -1 calories) ; part 1
+(foldl + 0 (foldl (lambda (l cur_maxes) (cdr (sort (append cur_maxes (list (foldl + 0 l))) <))) '(-1 -1 -1) calories)) ; part 2
