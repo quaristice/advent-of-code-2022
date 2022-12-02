@@ -14,5 +14,7 @@
 
 (define calories (parse-elves in))
 
-(foldl (lambda (l cur_max) (max cur_max (foldl + 0 l))) -1 calories) ; part 1
-(foldl + 0 (foldl (lambda (l cur_maxes) (cdr (sort (append cur_maxes (list (foldl + 0 l))) <))) '(-1 -1 -1) calories)) ; part 2
+(define (sum l) (foldl + 0 l))
+
+(foldl (lambda (l cur_max) (max cur_max (sum l))) -1 calories) ; part 1
+(sum (foldl (lambda (l cur_maxes) (cdr (sort (cons (sum l) cur_maxes) <))) '(-1 -1 -1) calories)) ; part 2
