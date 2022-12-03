@@ -17,9 +17,9 @@
 
 (define (calc-p2 p)
   (cond
-    [(= (second p) 1) (+ 1 (modulo (+ (first p) 2) 4))]
+    [(= (second p) 1) (+ 1 (modulo (+ (first p) 1) 3))]
     [(= (second p) 2) (+ 3 (first p))]
-    [(= (second p) 3) (+ 6 (modulo (+ (first p) 1) 3))]))
+    [(= (second p) 3) (+ 7 (modulo (first p) 3))]))
 
 (define (parse-input in)
   (let ([line (read-line in)])
