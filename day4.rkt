@@ -5,29 +5,30 @@
   (map (lambda (x) (map string->number (string-split x "-"))) (string-split l ",")))
 
 (define (check-full-overlap p) ; this sucks
+  (let-values ([(p11 p12 p21 p22) (apply values (flatten p))])
   (or
    (and
-    (>= (caar p) (caadr p))
-    (<= (cadar p) (cadadr p)))
+    (>= p11 p21)
+    (<= p21 p22))
    (and
-    (>= (caadr p) (caar p))
-    (<= (cadadr p) (cadar p)))))
+    (>= p21 p11)
+    (<= p22 p21)))))
 
 (define (check-any-overlap p) ; this also sucks
+  (let-values ([(p11 p12 p21 p22) (apply values (flatten p))])
   (or
    (or
-    (and (>= (caar p) (caadr p)) (<= (caar p) (cadadr p)))
-    (and (>= (cadar p) (caadr p)) (<= (cadar p) (cadadr p))))
+    (and (>= p11 p21) (<= p11 p22))
+    (and (>= p12 p22) (<= p12 p22)))
    (or
-    (and (>= (caadr p) (caar p)) (<= (caadr p) (cadar p)))
-    (and (>= (cadadr p) (caar p)) (<= (cadadr p) (cadar p))))))
+    (and (>= p21 p11) (<= p21 p12))
+    (and (>= p22 p11) (<= p22 p12))))))
 
 (define (parse-input in)
   (let ([line (read-line in)])
     (if (or (eof-object? line) (= (string-length line) 0))
         '()
         (cons (parse-line line) (parse-input in)))))
-
 
 
 (define pairs (parse-input in))
